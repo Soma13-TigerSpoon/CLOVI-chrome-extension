@@ -5,11 +5,25 @@
   "manifest_version": 3,
   "permissions": [
     "activeTab",
-    "tabs"
+    "tabs",
+    "cookies"
   ],
   "background": {
-    "service_worker": "src/service/background.js"
+    "service_worker": "src/service/background.js",
+    "type": "module"
   },
+  "web_accessible_resources": [
+    {
+        "resources": ["src/service/video.js"],
+        "matches": ["https://www.youtube.com/*", "https://music.youtube.com/*"]
+    }
+  ], 
+  "content_scripts": [
+    {
+        "matches": ["https://www.youtube.com/*", "https://music.youtube.com/*"],
+        "js": ["src/service/video.js"]
+    }
+  ],
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": "assets/images/hello_extensions.png"

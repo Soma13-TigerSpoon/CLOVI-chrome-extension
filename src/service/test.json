@@ -1,0 +1,388 @@
+{
+    "id": {
+      "S": "i1iAY4brK-s"
+    },
+    "creator": {
+      "S": "핏더사이즈"
+    },
+    "lists": {
+      "L": [
+        {
+          "M": {
+            "time": {
+                "M": {
+                  "end": {
+                    "S": "03:16"
+                  },
+                  "start": {
+                    "S": "03:11"
+                  }
+                }
+            },
+            "model": {
+                "M": {
+                  "height": {
+                    "N": "183"
+                  },
+                  "name": {
+                    "S": "핏더사이즈"
+                  },
+                  "weight": {
+                    "N": "88"
+                  }
+                }
+              },
+            "items":{
+                "L":[
+                    {"M":{
+                        "type":{
+                            "N":"1"
+                        },
+                        "typeName":{
+                            "S":"top"
+                        },  
+                        "color": {
+                            "S": "Black"
+                          },
+                          "imgUrl": {
+                            "S": "https://contents.lotteon.com/itemimage/_v143540/LO/18/65/15/32/71/_1/86/51/53/27/2/LO1865153271_1865153272_1.png/dims/optimize/dims/resizemc/400x400"
+                          },
+                          "name": {
+                            "S": "갤러리 디파트먼트 Vintage Souvenir 반팔티"
+                          },
+                          "shops": {
+                            "L": [
+                              {
+                                "M": {
+                                  "price": {
+                                    "S": "250,000"
+                                  },
+                                  "shopName": {
+                                    "S": "Lotte"
+                                  },
+                                  "shopUrl": {
+                                    "S": "https://www.lotteon.com/m/product/LO1865153271?sitmNo=LO1865153271_1865153272&mall_no=1&dp_infw_cd=SCH%EA%B0%A4%EB%9F%AC%EB%A6%AC%EB%94%94%ED%8C%8C%ED%8A%B8%EB%A8%BC%ED%8A%B8"
+                                  }
+                                }
+                              },
+                              {
+                                "M": {
+                                  "price": {
+                                    "S": "276,450"
+                                  },
+                                  "shopName": {
+                                    "S": "Trenbe"
+                                  },
+                                  "shopUrl": {
+                                    "S": "https://www.trenbe.com/product/SOUVENIR+VST1000+32567796"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "size": {
+                            "S": "XXL"
+                          }
+                    }},
+                    {"M":{
+                        "type":{
+                            "N":"2"
+                        },
+                        "typeName":{
+                            "S":"pants"
+                        },
+                        "color": {
+                            "S": "Indigo"
+                          },
+                          "imgUrl": {
+                            "S": "https://image.msscdn.net/images/prd_img/20220519/2569795/detail_2569795_9_500.jpg?t=20220530104043"
+                          },
+                          "name": {
+                            "S": "페이탈리즘 #0279 mer two tuck wide indigo"
+                          },
+                          "shops": {
+                            "L": [
+                              {
+                                "M": {
+                                  "price": {
+                                    "S": "53,100"
+                                  },
+                                  "shopName": {
+                                    "S": "무신사"
+                                  },
+                                  "shopUrl": {
+                                    "S": "https://www.musinsa.com/app/goods/2569795"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "size": {
+                            "S": "48"
+                          }
+                    }},
+                    {"M":{
+                        "type":{
+                            "N":"4"
+                        },
+                        "typeName":{
+                            "S":"shoes"
+                        },
+                        "color": {
+                            "S": "Brown Black"
+                          },
+                          "imgUrl": {
+                            "S": "https://outofstock.co.kr/upload/item/9274/16527657397857730.jpg"
+                          },
+                          "name": {
+                            "S": "뉴발란스 X JJJ자운드 990v3"
+                          },
+                          "shops": {
+                            "L": [
+                              {
+                                "M": {
+                                  "price": {
+                                    "S": "379,000"
+                                  },
+                                  "shopName": {
+                                    "S": "KREAM"
+                                  },
+                                  "shopUrl": {
+                                    "S": "https://kream.co.kr/products/61046"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "size": {
+                            "S": "48"
+                          }
+                    }},
+                    {"M":{
+                        "type":{
+                            "N":"3"
+                        },
+                        "typeName":{
+                            "S":"cap"
+                        },
+                        "color": {
+                          "S": "White Blue"
+                        },
+                        "imgUrl": {
+                          "S": "https://img.29cm.co.kr/next-product/2021/09/13/0f755b8793f44faf825ef186c9d0729c_20210913011828.jpg?width=700"
+                        },
+                        "name": {
+                          "S": "타이핑미스테이크 21FW TPMT-CP004 / FINDER CAP"
+                        },
+                        "shops": {
+                          "L": [
+                            {
+                              "M": {
+                                "price": {
+                                  "S": "74,000"
+                                },
+                                "shopName": {
+                                  "S": "29CM"
+                                },
+                                "shopUrl": {
+                                  "S": "https://product.29cm.co.kr/catalog/1226223"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "size": {
+                          "S": "Free"
+                        }
+                    }}
+                    ]
+                }
+            }
+        },
+        {
+          "M": {
+
+            "time": {
+              "M": {
+                "end": {
+                  "S": "05:37"
+                },
+                "start": {
+                  "S": "05:34"
+                }
+              }
+            },
+        
+            "model": {
+              "M": {
+                "height": {
+                  "N": "183"
+                },
+                "name": {
+                  "S": "핏더사이즈"
+                },
+                "weight": {
+                  "N": "88"
+                }
+              }
+            },
+            "items":{
+                "L":[
+                    {"M":{
+                        "type":{
+                            "N":"1"
+                        },
+                        "typeName":{
+                            "S":"top"
+                        },
+                        "color": {
+                            "S": "Green"
+                          },
+                          "imgUrl": {
+                            "S": "http://apartfromthat-store.com/web/product/big/202206/4d9bf405d30ce771e876645acf68d15c.jpg"
+                          },
+                          "name": {
+                            "S": "이얼즈어고 GARDEN FLOWER CONVERTIBLE COLLAR SHIRTS"
+                          },
+                          "shops": {
+                            "L": [
+                              {
+                                "M": {
+                                  "price": {
+                                    "S": "168,000"
+                                  },
+                                  "shopName": {
+                                    "S": "apart from that"
+                                  },
+                                  "shopUrl": {
+                                    "S": "http://apartfromthat-store.com/product/detail.html?product_no=1312&cate_no=42&display_group=1"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "size": {
+                            "S": "free"
+                          }
+                    }},
+                    {"M":{
+                        "type":{
+                            "N":"2"
+                        },
+                        "typeName":{
+                            "S":"pants"
+                        },
+                        "color": {
+                            "S": "Indigo Blue"
+                          },
+                          "imgUrl": {
+                            "S": "https://image.msscdn.net/images/prd_img/20220519/2569788/detail_2569788_10_500.jpg?t=20220530104204"
+                          },
+                          "name": {
+                            "S": "페이탈리즘 #0280 mer two tuck wide indigo"
+                          },
+                          "shops": {
+                            "L": [
+                              {
+                                "M": {
+                                  "price": {
+                                    "S": "53,100"
+                                  },
+                                  "shopName": {
+                                    "S": "무신사"
+                                  },
+                                  "shopUrl": {
+                                    "S": "https://www.musinsa.com/app/goods/2569788"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "size": {
+                            "S": "48"
+                          }
+                    }},
+                    {"M":{
+                        "type":{
+                            "N":"3"
+                        },
+                        "typeName":{
+                            "S":"cap"
+                        },
+                        "color": {
+                            "S": "Black"
+                          },
+                          "imgUrl": {
+                            "S": "https://cdn.mustit.co.kr/lib/upload/product/luxboy/2022/05/1653037065-72.jpeg/_dims_/resize/500x500/extent/500x500"
+                          },
+                          "name": {
+                            "S": "나누슈카 로고 볼캡"
+                          },
+                          "shops": {
+                            "L": [
+                              {
+                                "M": {
+                                  "price": {
+                                    "S": "115,000"
+                                  },
+                                  "shopName": {
+                                    "S": "머스트잇"
+                                  },
+                                  "shopUrl": {
+                                    "S": "https://m.web.mustit.co.kr/m/product/product_detail/42280054"
+                                  },
+                                  "soldOut": {
+                                    "BOOL": true
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "size": {
+                            "S": "Free"
+                          }
+                    }},
+                    {"M":{
+                        "type":{
+                            "N":"4"
+                        },
+                        "typeName":{
+                            "S":"shoes"
+                        },
+                        "color": {
+                            "S": ""
+                          },
+                          "imgUrl": {
+                            "S": "https://image.msscdn.net/images/goods_img/20190814/1118447/1118447_1_500.jpg?t=20190814161246"
+                          },
+                          "name": {
+                            "S": "레인보우 샌들"
+                          },
+                          "shops": {
+                            "L": [
+                              {
+                                "M": {
+                                  "price": {
+                                    "S": "109,000"
+                                  },
+                                  "shopName": {
+                                    "S": "무신사"
+                                  },
+                                  "shopUrl": {
+                                    "S": "https://www.musinsa.com/app/goods/1118447"
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "size": {
+                            "S": "280"
+                          }
+                    }}
+                ]
+            }
+          }
+        }
+      ]
+    }
+  }

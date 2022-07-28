@@ -121,15 +121,60 @@ const dummydata = [
     }
 ];
 
-let $message = document.getElementById("message");
+// let $message = document.getElementById("message");
 
 // $message.innerText = String(dummydata);
 
-chrome.storage.sync.get("currentUrl", ({ currentUrl }) => {
-    $message.innerText = currentUrl;
-});
+// chrome.storage.sync.get("currentUrl", ({ currentUrl }) => {
+//     $message.innerText = currentUrl;
+// });
 
+let dd = dummydata[0];
 
 // 아이콘 클릭하면 지정해놓은 아이템 리스트 나오도록. 
+let $header = document.getElementById("header");
+console.log($header);
+let $main = document.getElementById("main");
+$header.innerHTML = `
+    <div class="header__youtuber">
+        <img class="header__youtuber__img" src=${dd.youtuber.profileUrl}>
+        <div>${dd.youtuber.name}</div>
+    </div>
+    <div class="header__model">
+        <div class="header__model-name header__model__children">${dd.model.name}</div>
+        <div class="header__model-height header__model__children">${dd.model.height}cm</div>
+        <div class="header__model-weight header__model__children">${dd.model.weight}kg</div>
+    </div>
+`;
+
+
+$main.innerHTML = dd.clothes.map(i => (`
+    <div class="card">
+        <div class="item">
+            <img class="item__img" src=${i.imageUrl}>
+            <div class="item__info">
+                <div class="info__name">${i.name}</div>
+                <div class="info__others">
+                    <div class="others__seller">
+                        <img class="seller__img" src=${i.sellers[0].shopImage}>
+                        <div class="seller__name">${i.sellers[0].name}</div>
+                    </div>
+                    <div class="others__right">
+                        <div class="right__price">${i.sellers[0].price}원</div>
+                        <div class="right__colorSize">${i.color}/${i.size}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fold">
+            <i></i>
+        </div>
+    </div>
+`)).join('');
+
+console.log($main.innerHTML);
+
+
+
 
 // **************** let's do injection

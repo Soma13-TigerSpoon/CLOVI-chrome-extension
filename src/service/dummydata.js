@@ -1,19 +1,4 @@
-// chrome.runtime.onMessage.addListener(function(request, sender) {
-//     if (request.action == "getSource") {
-//         this.pageSource = request.source;
-//         var title = this.pageSource.match(/<title[^>]*>([^<]+)<\/title>/)[1];
-//         alert(title)
-//     }
-// });
-
-// chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-//     chrome.tabs.executeScript(
-//         tabs[0].id,
-//         { code: 'var s = document.documentElement.outerHTML; chrome.runtime.sendMessage({action: "getSource", source: s});' }
-//     );
-// });
-
-const dummydata = [
+export const dummydata = [
     {
         "youtuber" : {
             "name": "킹타쿠Kingtaku",
@@ -120,16 +105,3 @@ const dummydata = [
         ]
     }
 ];
-
-let $message = document.getElementById("message");
-
-// $message.innerText = String(dummydata);
-
-chrome.storage.sync.get("currentUrl", ({ currentUrl }) => {
-    $message.innerText = currentUrl;
-});
-
-
-// 아이콘 클릭하면 지정해놓은 아이템 리스트 나오도록. 
-
-// **************** let's do injection

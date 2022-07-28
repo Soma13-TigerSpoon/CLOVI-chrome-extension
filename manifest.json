@@ -1,12 +1,14 @@
 {
   "name": "CLOVI",
-  "description": "이거 뭘로 하지요 ㅋ",
+  "description": "make youtube shoppable",
   "version": "0.1.0",
   "manifest_version": 3,
   "permissions": [
     "activeTab",
     "tabs",
-    "cookies"
+    "cookies",
+    "storage",
+    "scripting"
   ],
   "background": {
     "service_worker": "src/service/background.js",
@@ -26,8 +28,9 @@
   ],
   "action": {
     "default_popup": "src/popup/popup.html",
-    "default_icon": "assets/images/hello_extensions.png"
+    "default_icon": "assets/images/clovi-logo.png"
   },
+  "options_page": "src/options/options.html",
   "commands": {
     "_execute_action": {
       "suggested_key": {

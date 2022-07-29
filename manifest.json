@@ -9,7 +9,7 @@
     "cookies"
   ],
   "background": {
-    "service_worker": "src/service/background.js",
+    "service_worker": "./src/service/background.js",
     "type": "module"
   },
   "web_accessible_resources": [
@@ -20,8 +20,8 @@
   ], 
   "content_scripts": [
     {
-        "matches": ["https://www.youtube.com/*", "https://music.youtube.com/*"],
-        "js": ["src/service/video.js"]
+      "js": ["src/service/video.js"],
+      "matches": ["https://www.youtube.com/*", "https://music.youtube.com/*"]
     }
   ],
   "action": {

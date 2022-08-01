@@ -172,9 +172,12 @@ $main.innerHTML = dd.clothes.map(i => (`
     </div>
 `)).join('');
 
-console.log($main.innerHTML);
 
 
-
+// chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//     chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+//       console.log(response.farewell);
+//     });
+//   });
 
 // **************** let's do injection

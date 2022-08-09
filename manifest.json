@@ -12,12 +12,6 @@
     "service_worker": "./src/service/background.js",
     "type": "module"
   },
-  "web_accessible_resources": [
-    {
-        "resources": ["src/service/video.js"],
-        "matches": ["https://www.youtube.com/*", "https://music.youtube.com/*"]
-    }
-  ], 
   "content_scripts": [
     {
       "js": ["src/service/video.js"],

@@ -23,6 +23,8 @@ export default class Video{
         // .then(data => data.text()) 
         // .then((text) => { console.log('request succeeded with JSON response', text) })
         // .catch(function (error) { console.log('request failed', error) });
+        console.log(result);
+        // console.log(result.json());
         return result.json();
     }
 }

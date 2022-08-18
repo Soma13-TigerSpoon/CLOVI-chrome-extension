@@ -1,17 +1,15 @@
-let message = document.getElementById('message')
-let count = 0;
 
-message.innerText = count;
-
-// chrome.runtime.onMessage.addListener(function(request, sender) {
-//     if (request.action == "getSource") {
-//         this.pageSource = request.source;
-//         var title = this.pageSource.match(/<title[^>]*>([^<]+)<\/title>/)[1];
-//         alert(title)
-//     }
-// });
-
-chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-    console.log(tabs[0].id);
-    message.innerText = tabs[0].id;
-});
+const $header = document.getElementById('header');
+console.log('popup.js loaded')
+$header.innerText = 'popup'
+chrome.runtime.onMessage.addListener(
+    (request, sender, sendResponse) => {
+        console.log('message requested');
+        console.log(sender.tab ? 
+            "from a content script" + sender.tab.url : 
+            "from the extension"  
+        );
+        $header.innerText = request.currTimeInSec;
+        sendResponse('response');
+    }
+);

@@ -1,7 +1,8 @@
-import {requestUrl} from "../config.js"
+import {requestUrl} from "../config.js";
+
 export default class Video{
     constructor(id, creator){
-        this.id = id;
+        this.id = id; 
         this.creator = creator;
     }
     get videoUrl(){

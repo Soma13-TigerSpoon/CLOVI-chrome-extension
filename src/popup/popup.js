@@ -1,3 +1,4 @@
+
 const $header = document.getElementById('header');
 console.log('popup.js loaded')
 $header.innerText = 'popup'

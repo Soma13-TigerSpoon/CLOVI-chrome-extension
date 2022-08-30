@@ -21,21 +21,20 @@ async function getVideoData(request, sender) {
   if (video_id != false) {
     console.log(video_id);
     console.log(typeof video_id);
+
     const storageObj = await chrome.storage.local.get(null);
     console.log(storageObj);
-    if (storageObj.hasOwnProperty(video_id)) {
-      console.log("1", video_id);
-      video_data = await chrome.storage.local.get(video_id);
-      console.log(video_data);
-    } else {
-      console.log("2", video_id);
+
+    if (!storageObj.hasOwnProperty(video_id)) {
+      console.log("first time to load this video. setting storage", video_id);
       const myvideo = new Video(video_id, "핏더사이즈");
-      video_data = await myvideo.info();
-      console.log(video_data);
-      console.log(video_id, typeof video_id);
-      chrome.storage.local.set({ [video_id]: video_data });
-      chrome.storage.local.get(null, (item) => console.log(item));
+      const newVideoData = await myvideo.info();
+      await chrome.storage.local.set({ [video_id]: newVideoData });
     }
+    
+    console.log("now getting data from storage");
+    video_data = await chrome.storage.local.get(video_id);
+
   } else {
     console.log(`video_id is false! - video_id: ${video_id}`);
   }

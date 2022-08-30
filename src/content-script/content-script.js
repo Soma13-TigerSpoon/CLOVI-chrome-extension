@@ -155,3 +155,5 @@ const get_items = (clothes, reset) => {
     `).join('');
   }
 };
+
+console.log('content script loaded!');

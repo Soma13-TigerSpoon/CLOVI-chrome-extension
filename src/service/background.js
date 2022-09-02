@@ -31,10 +31,9 @@ async function getVideoData(request, sender) {
       const newVideoData = await myvideo.info();
       await chrome.storage.local.set({ [video_id]: newVideoData });
     }
-    
+
     console.log("now getting data from storage");
     video_data = await chrome.storage.local.get(video_id);
-
   } else {
     console.log(`video_id is false! - video_id: ${video_id}`);
   }
@@ -47,50 +46,53 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-let urlBefore = '';
-chrome.tabs.onUpdated.addListener(
-  (tabId, changeInfo, tab) => {
-    // if(urlBefore === tab.url)
-    //   return;
+let urlBefore = "";
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status !== "complete") return;
 
-    // urlBefore = tab.url;
-    if(changeInfo.status !== 'complete')
-      return;
+  // if (urlBefore === tab.url) return;
+  // urlBefore = tab.url;
 
-    if(tab.url.startsWith('https://www.youtube.com/watch?v=')){
-      console.log("now you're watching a video");
+  if (tab.url.startsWith("https://www.youtube.com/watch?v=")) {
+    console.log("now you're watching a video");
 
-      const ping = () => {
-        console.log('pinged');
-        chrome.tabs.sendMessage(tabId, {
-          message: "TabUpdated_Video"
-        }, (response) => {
-          if(chrome.runtime.lastError){
+    const ping = () => {
+      console.log("pinged");
+      chrome.tabs.sendMessage(
+        tabId,
+        {
+          message: "TabUpdated_Video",
+        },
+        (response) => {
+          if (chrome.runtime.lastError) {
             setTimeout(ping, 1000);
-          }else{
+          } else {
             console.log(response.message);
           }
-        });
-      };
-      ping();
-
-    }else{
-      console.log("now you're NOT watching a video");
-      const ping2 = () => {
-        console.log('ping2ed');
-        chrome.tabs.sendMessage(tabId, {
-          message: "TabUpdated_NotVideo"
-        }, (response) => {
-          if(chrome.runtime.lastError){
+        }
+      );
+    };
+    ping();
+  } else if (tab.url.startsWith("https://www.youtube.com")) {
+    console.log("now you're NOT watching a video");
+    const ping2 = () => {
+      console.log("ping2ed");
+      chrome.tabs.sendMessage(
+        tabId,
+        {
+          message: "TabUpdated_NotVideo",
+        },
+        (response) => {
+          if (chrome.runtime.lastError) {
             setTimeout(ping2, 1000);
-          }else{
+          } else {
             console.log(response.message);
           }
-        });
-      };
-      ping2();
-    }
-
+        }
+      );
+    };
+    ping2();
+  } else {
+    console.log("NOT youtube");
   }
-  
-);
+});

@@ -73,9 +73,15 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       );
     };
     ping();
+
   } else if (tab.url.startsWith("https://www.youtube.com")) {
     console.log("now you're NOT watching a video");
-    const ping2 = () => {
+    const ping2 = (repeated) => {
+      if(repeated > 10) {
+        console.log('max repeat count(10) exceeded, stop requesting.')
+        return;
+      }
+
       console.log("ping2ed");
       chrome.tabs.sendMessage(
         tabId,
@@ -84,15 +90,33 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         },
         (response) => {
           if (chrome.runtime.lastError) {
-            setTimeout(ping2, 1000);
+            setTimeout(() => {
+              ping2(repeated+1);
+            }, 1000);
           } else {
             console.log(response.message);
           }
         }
       );
     };
-    ping2();
+    ping2(1);
   } else {
     console.log("NOT youtube");
   }
+});
+
+chrome.action.onClicked.addListener((tab) => {
+  console.log('favicon clicked');
+  if (tab.url.startsWith("https://www.youtube.com/watch?v=")) {
+    console.log("favicon clicked, watching a video");
+    chrome.tabs.sendMessage( tab.id, { message: "show_UI" }, (response) => {
+      console.log(response.message);
+    }); 
+  } else if (tab.url.startsWith("https://www.youtube.com")) {
+    console.log("favicon click, NOT watching a video");
+    
+
+  } else {
+    console.log("NOT youtube");
+  }   
 });

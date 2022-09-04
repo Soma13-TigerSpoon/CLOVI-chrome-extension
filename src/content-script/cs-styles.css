@@ -21,6 +21,7 @@ a:active {
   /* overflow: hidden; */
   overflow: hidden;
   box-shadow: rgba(100, 100, 111, 0.7) 0px 7px 29px 0px;
+  display: none;
 }
 
 header {

@@ -29,7 +29,7 @@ async function getVideoData(request, sender) {
       console.log("first time to load this video. setting storage", video_id);
       const myvideo = new Video(video_id, "핏더사이즈");
       const newVideoData = await myvideo.info();
-      await chrome.storage.local.set({ [video_id]: newVideoData });
+      await chrome.storage.local.set({ [video_id]: newVideoData.data });
     }
 
     console.log("now getting data from storage");

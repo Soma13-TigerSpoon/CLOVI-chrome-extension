@@ -203,6 +203,8 @@ main::-webkit-scrollbar {
 }
 .shopInfo__shopLogo {
   margin-right: 5px;
+  width: 12px;
+  height: 12px;
 }
 .shopInfo__shopName {
   font-size: 12px;

@@ -44,13 +44,16 @@ const render = () => {
   chrome.runtime.sendMessage({ greeting: "hello" }, (video_data) => {
     console.log(video_data);
     videoData = video_data;
-    youtuber = video_data.Items[0];
-    videoData.Items[0].lists.forEach((i) => {
-      collections[i.time.start] = {
+    youtuber = {
+      creator: videoData.creator,
+      profileUrl: videoData.profileImgUrl
+    };
+    videoData.lists.forEach((i) => {
+      collections[i.times.start] = {
         model: {
-          height: i.model.height,
+          height: i.model.height_cm,
           name: i.model.name,
-          weight: i.model.weight,
+          weight: i.model.weight_kg,
         },
         items: i.items,
       };
@@ -130,21 +133,21 @@ const render = () => {
           <div class="card">
             <a href="${i.shops[0].shopUrl}" target="_blank">
               <div class="item">
-                  <img class="item__img" src=${i.imgUrl}>
+                  <img class="item__img" src=${i.itemImgUrl}>
                   <div class="item__info">
                       <div class="info__name">${i.name}</div>
                       <div class="info__others">
                           <div class="others__seller">
                               <img class="seller__img" src=${
-                                i.shops[0].shopUrl
+                                i.shops[0].logoUrl
                               }>
                               <div class="seller__name">${
-                                i.shops[0].shopName
+                                i.shops[0].name
                               }</div>
                           </div>
                           <div class="others__right">
                               <div class="right__price">${
-                                i.shops[0].price
+                                new Intl.NumberFormat().format(i.shops[0].price)
                               }원</div>
                               <div class="right__colorSize">${i.color}/${
             i.size
@@ -165,10 +168,10 @@ const render = () => {
               <a href="${shop.shopUrl}" target="_blank">
                 <div class="shops__shop">
                   <div class="shop__shopInfo">
-                    <img class="shopInfo__shopLogo" src=${shop.imgUrl}>
-                    <div class="shopInfo__shopName">${shop.shopName}</div>
+                    <img class="shopInfo__shopLogo" src=${shop.logoUrl}>
+                    <div class="shopInfo__shopName">${shop.name}</div>
                   </div>
-                  <div class="shop__price">${shop.price}원</div>
+                  <div class="shop__price">${new Intl.NumberFormat().format(shop.price)}원</div>
                 </div>
               </a>
           `

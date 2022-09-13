@@ -35,12 +35,6 @@ const render = () => {
   console.log(video);
   console.log(video.currentTime);
 
-  video.addEventListener("timeupdate", () => {
-    if (videoData != undefined) {
-      updateContents(timeline);
-    }
-  });
-
   chrome.runtime.sendMessage({ greeting: "hello" }, (video_data) => {
     console.log(video_data);
     videoData = video_data;
@@ -64,6 +58,12 @@ const render = () => {
     timeline.sort((a, b) => a - b);
     console.log(timeline);
     updateContents(timeline);
+  });
+
+  video.addEventListener("timeupdate", () => {
+    if (videoData != undefined) {
+      updateContents(timeline);
+    }
   });
 
   const updateContents = (timeline) => {
@@ -185,20 +185,22 @@ const render = () => {
   };
 };
 
-// render();
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log(
     sender.tab
       ? "from a content script:" + sender.tab.url
       : "from the extension"
   );
-  if (request.message === "TabUpdated_Video") {
-    console.log("tab updated and is video confirmed.");
+  if (request.message === "TabUpdated_Video_Registered") {
+    console.log("tab updated and is a registered Video.");
     $clovi.style.display = "block";
     render();
     sendResponse({ message: "rendered and $clovi turned on." });
-  } else if (request.message === "TabUpdated_NotVideo") {
+  } else if(request.message === "TabUpdated_Video_NOT_Registered"){
+    console.log("tab updated and is NOT a registered Video.");
+    $clovi.style.display = "none";
+    sendResponse({ message: "$clovi turned off." });
+  }else if (request.message === "TabUpdated_NotVideo") {
     console.log("tab updated and is NOT video confirmed.");
     $clovi.style.display = "none";
     sendResponse({ message: "$clovi turned off." });

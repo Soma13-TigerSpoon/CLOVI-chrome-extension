@@ -1,10 +1,10 @@
-div {
+.clv-div {
   box-sizing: border-box;
 } 
-a,
-a:hover,
-a:focus,
-a:active {
+.clv-a,
+.clv-a:hover,
+.clv-a:focus,
+.clv-a:active {
   text-decoration: none;
   color: inherit;
 }
@@ -24,7 +24,7 @@ a:active {
   display: none;
 }
 
-header {
+.clv-header {
   display: flex;
   /* position: fixed; */
   justify-content: space-between;
@@ -38,33 +38,33 @@ header {
   background-color: white;
 }
 
-.header__youtuber {
+.clv-header__youtuber {
   display: flex;
   align-items: center;
   font-size: 14px;
   font-weight: 400;
 }
-.header__youtuber__img {
+.clv-header__youtuber__img {
   width: 30px;
   margin-right: 10px;
   border-radius: 50%;
 }
 
-.header__right {
+.clv-header__right {
   display: flex;
   align-items: center;
 }
 
-.right__model {
+.clv-right__model {
   display: flex;
   font-size: 12px;
 }
 
-.right__model__children {
+.clv-right__model__children {
   margin-left: 10px;
 }
 
-.right__close {
+.clv-right__close {
   font-weight: 600;
   font-size: 14px;
   margin-left: 12px;
@@ -72,7 +72,7 @@ header {
   cursor: pointer;
 }
 
-main {
+.clv-main {
   background-color: #e5e5e5;
   /* position: relative; */
   display: flex;
@@ -84,11 +84,11 @@ main {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
-main::-webkit-scrollbar {
+.clv-main::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
-.emptyItems {
+.clv-emptyItems {
   height: 40px;
   width: 100%;
   display: flex;
@@ -96,68 +96,68 @@ main::-webkit-scrollbar {
   align-items: center;
 }
 
-.card {
+.clv-card {
   width: 100%;
   margin-top: 1px;
   display: flex;
 }
-.item {
+.clv-item {
   background-color: white;
   padding: 8px;
   width: 336px;
   display: flex;
 }
-.item:hover {
+.clv-item:hover {
   background-color: #f2f2f2;
   cursor: pointer;
 }
-.item__img {
+.clv-item__img {
   width: 80px;
   margin-right: 8px;
 }
-.item__info {
+.clv-item__info {
   width: 100%;
   display: flex;
   flex-direction: column;
   padding: 5px 0px;
   justify-content: space-between;
 }
-.info__name {
+.clv-info__name {
   font-size: 14px;
   font-weight: 500;
 }
-.info__others {
+.clv-info__others {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
-.others__seller {
+.clv-others__seller {
   display: flex;
 }
-.seller__img {
+.clv-seller__img {
   width: 12px;
   height: 12px;
   margin-right: 5px;
 }
-.seller__name {
+.clv-seller__name {
   font-size: 12px;
   font-weight: 200;
 }
-.others__right {
+.clv-others__right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
-.right__price {
+.clv-right__price {
   font-size: 14px;
   font-weight: 600;
 }
-.right__colorSize {
+.clv-right__colorSize {
   margin-top: 5px;
   font-size: 12px;
   font-weight: 200;
 }
-.fold {
+.clv-fold {
   width: 24px;
   background-color: white;
   display: flex;
@@ -165,26 +165,26 @@ main::-webkit-scrollbar {
   align-items: center;
 }
 
-.active,
-.fold:hover {
+.clv-active,
+.clv-fold:hover {
   cursor: pointer;
   background-color: #f2f2f2;
 }
 
-.fold__button {
+.clv-fold__button {
   font-size: 10px;
   font-weight: 400;
   transition: transform 0.3s;
 }
-.superactive {
+.clv-superactive {
   transform: rotate(180deg);
 }
-.shops {
+.clv-shops {
   display: flex;
   flex-direction: column;
   display: none;
 }
-.shops__shop {
+.clv-shops__shop {
   margin-top: 1px;
   display: flex;
   justify-content: space-between;
@@ -193,24 +193,24 @@ main::-webkit-scrollbar {
   height: 40px;
   background-color: white;
 }
-.shops__shop:hover {
+.clv-shops__shop:hover {
   background-color: #f2f2f2;
   cursor: pointer;
 }
-.shop__shopInfo {
+.clv-shop__shopInfo {
   display: flex;
   align-items: center;
 }
-.shopInfo__shopLogo {
+.clv-shopInfo__shopLogo {
   margin-right: 5px;
   width: 12px;
   height: 12px;
 }
-.shopInfo__shopName {
+.clv-shopInfo__shopName {
   font-size: 12px;
   font-weight: 500;
 }
-.shop__price {
+.clv-shop__price {
   display: flex;
   justify-content: right;
   align-items: center;

@@ -41,10 +41,10 @@ async function getVideoData(request, sender) {
   return video_data[video_id];
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  getVideoData(request, sender).then(sendResponse);
-  return true;
-});
+// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+//   getVideoData(request, sender).then(sendResponse);
+//   return true;
+// });
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status !== "complete") return;
@@ -81,7 +81,8 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         chrome.tabs.sendMessage(
           tabId,
           {
-            message: "TabUpdated_Video_Registered"
+            message: "TabUpdated_Video_Registered",
+            video_data: newVideoData.data
           },
           (response) => {
             if (chrome.runtime.lastError) {

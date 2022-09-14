@@ -30,41 +30,7 @@ $header.appendChild($header__right);
 $header__right.appendChild($right__model);
 $header__right.appendChild($right__close);
 
-const render = () => {
-  const video = document.getElementsByClassName("video-stream")[0];
-  console.log(video);
-  console.log(video.currentTime);
-
-  chrome.runtime.sendMessage({ greeting: "hello" }, (video_data) => {
-    console.log(video_data);
-    videoData = video_data;
-    youtuber = {
-      creator: videoData.creator,
-      profileUrl: videoData.profileImgUrl
-    };
-    videoData.lists.forEach((i) => {
-      collections[i.times.start] = {
-        model: {
-          height: i.model.height_cm,
-          name: i.model.name,
-          weight: i.model.weight_kg,
-        },
-        items: i.items,
-      };
-    });
-    console.log(collections);
-    $header__youtuber.innerHTML = get_header__youtuber(youtuber);
-    timeline = Object.keys(collections).map((i) => i);
-    timeline.sort((a, b) => a - b);
-    console.log(timeline);
-    updateContents(timeline);
-  });
-
-  video.addEventListener("timeupdate", () => {
-    if (videoData != undefined) {
-      updateContents(timeline);
-    }
-  });
+const render = (video_data=null) => {
 
   const updateContents = (timeline) => {
     let newCurrentItemId;
@@ -183,6 +149,39 @@ const render = () => {
         .join("");
     }
   };
+
+  const video = document.getElementsByClassName("video-stream")[0];
+  console.log(video);
+  console.log(video.currentTime);
+
+  videoData = video_data;
+  youtuber = {
+    creator: videoData.creator,
+    profileUrl: videoData.profileImgUrl
+  };
+  videoData.lists.forEach((i) => {
+    collections[i.times.start] = {
+      model: {
+        height: i.model.height_cm,
+        name: i.model.name,
+        weight: i.model.weight_kg,
+      },
+      items: i.items,
+    };
+  });
+
+  console.log(collections);
+  $header__youtuber.innerHTML = get_header__youtuber(youtuber);
+  timeline = Object.keys(collections).map((i) => i);
+  timeline.sort((a, b) => a - b);
+  console.log(timeline);
+  updateContents(timeline);
+
+  video.addEventListener("timeupdate", () => {
+    if (videoData != undefined) {
+      updateContents(timeline);
+    }
+  });
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -193,9 +192,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   );
   if (request.message === "TabUpdated_Video_Registered") {
     console.log("tab updated and is a registered Video.");
+    console.log('CS', request.video_data);
     $clovi.style.display = "block";
-    render();
     sendResponse({ message: "rendered and $clovi turned on." });
+    render(request.video_data);
   } else if(request.message === "TabUpdated_Video_NOT_Registered"){
     console.log("tab updated and is NOT a registered Video.");
     $clovi.style.display = "none";

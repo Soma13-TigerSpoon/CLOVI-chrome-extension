@@ -1,34 +1,18 @@
 import {requestUrl} from "../config.js";
 
 export default class Video{
-    constructor(id, creator){
+    constructor(id){
         this.id = id; 
-        this.creator = creator;
     }
     get videoUrl(){
         return "https://www.youtube.com/watch?v={}".format(this.id);
     }
     async info(){
-        // let params = { "id": this.id, "creator": this.creator }; 
-        // let query = "?"+Object.keys(params) 
-        //     .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])) 
-        //     .join('&'); 
-        // console.log(query);
-        // const result = await fetch(requestUrl + query,{
-        //     method: "GET",
-        //     mode: 'cors',
-        //     headers:{
-        //         "Content-Type": "application/json",
-        //     }
-        // });
-
-        const result = await fetch(requestUrl);
-
-        // .then(data => data.text()) 
-        // .then((text) => { console.log('request succeeded with JSON response', text) })
-        // .catch(function (error) { console.log('request failed', error) });
+        const result = await fetch(requestUrl+this.id);
         console.log(result);
-        // console.log(result.json());
+        // result 의 status 에 따라서 오류 처리 해주어야 할지도?
+        // 503인 경우 html 태그를 리턴하기 때문에 Uncaught (in promise) 
+        // SyntaxError: Unexpected token '<', "<html> <h"... is not valid JSON 에러가 발생함. 
         return result.json();
     }
 }

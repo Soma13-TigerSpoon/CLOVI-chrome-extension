@@ -27,7 +27,7 @@ async function getVideoData(request, sender) {
 
     if (!storageObj.hasOwnProperty(video_id)) {
       console.log("first time to load this video. setting storage", video_id);
-      const myvideo = new Video(video_id, "핏더사이즈");
+      const myvideo = new Video(video_id);
       const newVideoData = await myvideo.info();
       await chrome.storage.local.set({ [video_id]: newVideoData.data });
     }
@@ -41,39 +41,60 @@ async function getVideoData(request, sender) {
   return video_data[video_id];
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  getVideoData(request, sender).then(sendResponse);
-  return true;
-});
+// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+//   getVideoData(request, sender).then(sendResponse);
+//   return true;
+// });
 
-let urlBefore = "";
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status !== "complete") return;
 
-  // if (urlBefore === tab.url) return;
-  // urlBefore = tab.url;
-
   if (tab.url.startsWith("https://www.youtube.com/watch?v=")) {
-    console.log("now you're watching a video");
 
-    const ping = () => {
-      console.log("pinged");
-      chrome.tabs.sendMessage(
-        tabId,
-        {
-          message: "TabUpdated_Video",
-        },
-        (response) => {
-          if (chrome.runtime.lastError) {
-            setTimeout(ping, 1000);
-          } else {
-            console.log(response.message);
+    console.log("now you're watching a video,");
+    const video_id = youtube_id_parser(tab.url);
+    const myvideo = new Video(video_id);
+    const newVideoData = await myvideo.info();
+    if(newVideoData.code === "EV001"){
+      console.log("BUT NOT a registered video.");
+      const ping3 = () => {
+        console.log("pinged");
+        chrome.tabs.sendMessage(
+          tabId,
+          {
+            message: "TabUpdated_Video_NOT_Registered"
+          },
+          (response) => {
+            if (chrome.runtime.lastError) {
+              setTimeout(ping3, 1000);
+            } else {
+              console.log(response.message);
+            }
           }
-        }
-      );
-    };
-    ping();
-
+        );
+      };
+      ping3();
+    }else{
+      console.log("a registered video.")
+      const ping = () => {
+        console.log("pinged");
+        chrome.tabs.sendMessage(
+          tabId,
+          {
+            message: "TabUpdated_Video_Registered",
+            video_data: newVideoData.data
+          },
+          (response) => {
+            if (chrome.runtime.lastError) {
+              setTimeout(ping, 1000);
+            } else {
+              console.log(response.message);
+            }
+          }
+        );
+      };
+      ping();
+    }
   } else if (tab.url.startsWith("https://www.youtube.com")) {
     console.log("now you're NOT watching a video");
     const ping2 = (repeated) => {

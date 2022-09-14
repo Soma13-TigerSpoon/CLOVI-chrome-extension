@@ -7,6 +7,9 @@
     "tabs",
     "storage"
   ],
+  "host_permissions": [
+    "https://api.clovi.app/*"
+  ],
   "background": {
     "service_worker": "./src/service/background.js",
     "type": "module"

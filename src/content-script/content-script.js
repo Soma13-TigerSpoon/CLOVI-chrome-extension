@@ -1,5 +1,5 @@
 let youtuber,
-  collections = {},
+  collections={},
   videoData,
   timeline,
   currentItemId = -1;
@@ -33,8 +33,12 @@ $header__right.appendChild($right__model);
 $header__right.appendChild($right__close);
 
 const render = (video_data=null) => {
-
-  const updateContents = (timeline) => {
+  const updateContents = (timeline, byRender) => {
+    if(byRender){
+      console.log('by render');
+    }else{
+      console.log('by timeupdate event');
+    }
     let newCurrentItemId;
     const currentTimeInSec = Math.floor(video.currentTime);
     if (currentTimeInSec < timeline[0]) {
@@ -161,6 +165,7 @@ const render = (video_data=null) => {
     creator: videoData.creator,
     profileUrl: videoData.profileImgUrl
   };
+  collections = {};
   videoData.lists.forEach((i) => {
     collections[i.times.start] = {
       model: {
@@ -177,11 +182,11 @@ const render = (video_data=null) => {
   timeline = Object.keys(collections).map((i) => i);
   timeline.sort((a, b) => a - b);
   console.log(timeline);
-  updateContents(timeline);
+  updateContents(timeline, 1);
 
   video.addEventListener("timeupdate", () => {
     if (videoData != undefined) {
-      updateContents(timeline);
+      updateContents(timeline, 0);
     }
   });
 };

@@ -72,7 +72,7 @@
   cursor: pointer;
 }
 
-.main {
+.clv-main {
   background-color: #e5e5e5;
   /* position: relative; */
   display: flex;
@@ -84,7 +84,7 @@
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
-.main::-webkit-scrollbar {
+.clv-main::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 

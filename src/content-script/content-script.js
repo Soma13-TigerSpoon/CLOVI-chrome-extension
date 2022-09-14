@@ -11,8 +11,8 @@ $body.appendChild($clovi);
 const $header = document.createElement("header");
 $header.className = "clv-header"
 const $main = document.createElement("main");
-$main.className = "main"
-$main.innerHTML = '<div class="clv-div cmain clv-emptyItems">No items to load.</div>';
+$main.className = "clv-main"
+$main.innerHTML = '<div class="clv-div clv-emptyItems">No items to load.</div>';
 const $header__youtuber = document.createElement("div");
 const $header__right = document.createElement("div");
 const $right__model = document.createElement("div");

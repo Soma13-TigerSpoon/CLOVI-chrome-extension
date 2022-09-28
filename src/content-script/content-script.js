@@ -34,6 +34,7 @@ $header__right.appendChild($right__close);
 
 const render = (video_data=null) => {
   const updateContents = (timeline, byRender) => {
+    console.log('update, video_data:', video_data);
     if(byRender){
       console.log('by render');
     }else{
@@ -184,11 +185,21 @@ const render = (video_data=null) => {
   console.log(timeline);
   updateContents(timeline, 1);
 
-  video.addEventListener("timeupdate", () => {
+  const timeupdateHandler = () => {
     if (videoData != undefined) {
       updateContents(timeline, 0);
     }
+  }
+
+  video.addEventListener("timeupdate", timeupdateHandler);
+  document.addEventListener("yt-navigate-start", () => {
+    console.log('yt-navigate-start');
+    video.removeEventListener("timeupdate", timeupdateHandler);
   });
+  window.onhashchange = () => {
+    console.log('going back and forth');
+    video.removeEventListener("timeupdate", timeupdateHandler);
+  }
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {

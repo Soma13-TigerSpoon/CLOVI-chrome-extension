@@ -46,8 +46,13 @@ async function getVideoData(request, sender) {
 //   return true;
 // });
 
+let urlBefore = '';
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status !== "complete") return;
+  if (tab.url === urlBefore) return;
+  urlBefore = tab.url;
+  console.log("completed!", tab.url);
 
   if (tab.url.startsWith("https://www.youtube.com/watch?v=")) {
 
@@ -128,16 +133,13 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 
 chrome.action.onClicked.addListener((tab) => {
   console.log('favicon clicked');
-  if (tab.url.startsWith("https://www.youtube.com/watch?v=")) {
-    console.log("favicon clicked, watching a video");
+  if (tab.url.startsWith("https://www.youtube.com")) {
+    console.log("favicon clicked, on youtube domain");
     chrome.tabs.sendMessage( tab.id, { message: "show_UI" }, (response) => {
       console.log(response.message);
     }); 
-  } else if (tab.url.startsWith("https://www.youtube.com")) {
-    console.log("favicon click, NOT watching a video");
-    
-
   } else {
     console.log("NOT youtube");
+    // open web platform
   }   
 });

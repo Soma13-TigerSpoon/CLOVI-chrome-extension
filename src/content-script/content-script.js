@@ -74,12 +74,15 @@ const updateContents = (timeline, byRender, video_data, video) => {
   }
 };
 
-const get_header__youtuber = (youtuber) => {
+const get_header__youtuber = (youtuber=null) => {
+  const profileUrl = (youtuber===null) ? '' : youtuber.profileUrl;
+  const creator = (youtuber===null) ? '' : youtuber.creator;
   return `
-    <img class="clv-header__youtuber__img" src=${youtuber.profileUrl}>
-    <div class="clv-div">${youtuber.creator}</div>
+    <img class="clv-header__youtuber__img" src=${profileUrl}>
+    <div class="clv-div">${creator}</div>
   `;
 };
+
 const get_right__model = (currentItemId) => {
   if (currentItemId === -1) {
     return "";
@@ -103,27 +106,38 @@ const get_items = () => {
       .map(
         (i) => `
         <div class="clv-div clv-card">
-          <a class="clv-a" href="${i.shops[0].shopUrl}" target="_blank">
+          <a class="clv-a" href="${
+            i.item.shops[0] ? i.item.shops[0].shopUrl : ""
+          }" target="_blank">
             <div class="clv-div clv-item">
-                <img class="clv-item__img" src=${i.itemImgUrl}>
+                <img class="clv-item__img" src=${i.item.itemImgUrl}>
                 <div class="clv-div clv-item__info">
-                    <div class="clv-div clv-info__name">${i.name}</div>
+                    <div class="clv-div clv-info__name">
+                      <span class="clv-info__name-brand">[${i.item.brand}]</span>
+                      <span>${i.item.name}</span>
+                    </div>
                     <div class="clv-div clv-info__others">
                         <div class="clv-div clv-others__seller">
                             <img class="clv-seller__img" src=${
-                              i.shops[0].logoUrl
+                              i.item.shops[0] ? i.item.shops[0].logoUrl : ""
                             }>
                             <div class="clv-div clv-seller__name">${
-                              i.shops[0].name
+                              i.item.shops[0]
+                                ? i.item.shops[0].name
+                                : "판매처를 찾을 수 없습니다."
                             }</div>
                         </div>
                         <div class="clv-div clv-others__right">
-                            <div class="clv-div clv-right__price">${new Intl.NumberFormat().format(
-                              i.shops[0].price
-                            )}원</div>
+                            <div class="clv-div clv-right__price">${
+                              i.item.shops[0]
+                                ? new Intl.NumberFormat().format(
+                                    i.item.shops[0].price
+                                  )
+                                : 0
+                            }원</div>
                             <div class="clv-div clv-right__colorSize">${
-                              i.color
-                            }/${i.size}</div>
+                              i.item.color
+                            }/${i.item.size}</div>
                         </div>
                     </div>
                 </div>
@@ -134,7 +148,7 @@ const get_items = () => {
           </div>
       </div>
       <div class="clv-div clv-shops">
-        ${i.shops
+        ${i.item.shops
           .map(
             (shop) => `
             <a class="clv-a" href="${shop.shopUrl}" target="_blank">
@@ -163,43 +177,54 @@ const render = (video_data = null) => {
   video = document.getElementsByClassName("video-stream")[0];
   console.log(video);
   console.log(video.currentTime);
-
+  console.log("video_data:", video_data);
   videoData = video_data;
-  youtuber = {
-    creator: videoData.creator,
-    profileUrl: videoData.profileImgUrl,
-  };
-  collections = {};
-  videoData.lists.forEach((i) => {
-    collections[i.times.start] = {
-      model: {
-        height: i.model.height_cm,
-        name: i.model.name,
-        weight: i.model.weight_kg,
-      },
-      items: i.items,
+  console.log("videoData:", videoData);
+  console.log("youtuber:", youtuber);
+
+    youtuber = {
+      creator: videoData.creator,
+      profileUrl: videoData.profileImgUrl,
     };
-  });
+    console.log("youtuber:", youtuber);
+    collections = {};
+    videoData.lists.forEach((i) => {
+      collections[i.times.start] = {
+        model: {
+          height: i.model.height_cm,
+          name: i.model.name,
+          weight: i.model.weight_kg,
+        },
+        items: i.items,
+      };
+    });
+    console.log(collections);
+    console.log("$header__youtuber.innerHTML:", $header__youtuber.innerHTML);
+    $header__youtuber.innerHTML = get_header__youtuber(youtuber);
+    console.log("$header__youtuber.innerHTML:", $header__youtuber.innerHTML);
+    timeline = Object.keys(collections).map((i) => i);
+    timeline.sort((a, b) => a - b);
+    console.log(timeline);
+    updateContents(timeline, 1, videoData, video);
+  
+    video.ontimeupdate = function () {
+      if (videoData != null) {
+        updateContents(timeline, 0, videoData, video);
+      }
+    };
+};
 
-  console.log(collections);
-  $header__youtuber.innerHTML = get_header__youtuber(youtuber);
-  timeline = Object.keys(collections).map((i) => i);
-  timeline.sort((a, b) => a - b);
-  console.log(timeline);
-  updateContents(timeline, 1, videoData, video);
-
-  const timeupdateHandler = () => {
-    if (videoData != undefined) {
-      updateContents(timeline, 0, videoData, video);
-    }
-  };
-  video.addEventListener("timeupdate", timeupdateHandler);
-  // chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  //   if (request.message === "TabUpdated_Video_Registered2") {
-  //     video.removeEventListener("timeupdate", timeupdateHandler);
-  //     sendResponse({ message: 'removed.' });
-  //   }
-  // });
+const clear = () => {
+  console.log('clear!!!');
+  $header__youtuber.innerHTML = get_header__youtuber();
+  // video = null;
+  video = document.getElementsByClassName("video-stream")[0] ? document.getElementsByClassName("video-stream")[0] : null;
+  if(video){
+    video.ontimeupdate = null;
+  }
+  $right__model.innerHTML = '';
+  $main.innerHTML ='<div class="clv-div clv-emptyItems">No items to load.</div>';
+  // 이 부분을 다르게 렌더링하면 비디오 아닌 경우에 보여줄 화면을 따로 지정하는 것이 가능함.
 };
 
 // const timeupdateHandler = () => {
@@ -234,10 +259,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log("tab updated and is NOT a registered Video.");
     $clovi.style.display = "none";
     sendResponse({ message: "$clovi turned off." });
+    clear();
   } else if (request.message === "TabUpdated_NotVideo") {
     console.log("tab updated and is NOT video confirmed.");
     $clovi.style.display = "none";
     sendResponse({ message: "$clovi turned off." });
+    clear();
   }
 });
 

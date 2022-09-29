@@ -99,6 +99,30 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         );
       };
       ping();
+      const ping4 = (repeated) => {
+        if(repeated > 10) {
+          console.log('max repeat count(10) exceeded, stop requesting.')
+          return;
+        }
+  
+        console.log("ping4ed");
+        chrome.tabs.sendMessage(
+          tabId,
+          {
+            message: "TabUpdated_Video_Registered2",
+          },
+          (response) => {
+            if (chrome.runtime.lastError) {
+              setTimeout(() => {
+                ping4(repeated+1);
+              }, 1000);
+            } else {
+              console.log(response.message);
+            }
+          }
+        );
+      };
+      ping4(1);
     }
   } else if (tab.url.startsWith("https://www.youtube.com")) {
     console.log("now you're NOT watching a video");

@@ -55,19 +55,18 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   // console.log("completed!", tab.url);
 
   if (tab.url.startsWith("https://www.youtube.com/watch?v=")) {
-
     console.log("now you're watching a video,");
     const video_id = youtube_id_parser(tab.url);
     const myvideo = new Video(video_id);
     const newVideoData = await myvideo.info();
-    if(newVideoData.code === "EV001"){
+    if (newVideoData.code === "EV001") {
       console.log("BUT NOT a registered video.");
       const ping3 = () => {
         console.log("pinged");
         chrome.tabs.sendMessage(
           tabId,
           {
-            message: "TabUpdated_Video_NOT_Registered"
+            message: "TabUpdated_Video_NOT_Registered",
           },
           (response) => {
             if (chrome.runtime.lastError) {
@@ -79,15 +78,15 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         );
       };
       ping3();
-    }else{
-      console.log("a registered video.")
+    } else {
+      console.log("a registered video.");
       const ping = () => {
         console.log("pinged");
         chrome.tabs.sendMessage(
           tabId,
           {
             message: "TabUpdated_Video_Registered",
-            video_data: newVideoData.data
+            video_data: newVideoData.data,
           },
           (response) => {
             if (chrome.runtime.lastError) {
@@ -103,8 +102,8 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   } else if (tab.url.startsWith("https://www.youtube.com")) {
     console.log("now you're NOT watching a video");
     const ping2 = (repeated) => {
-      if(repeated > 10) {
-        console.log('max repeat count(10) exceeded, stop requesting.')
+      if (repeated > 10) {
+        console.log("max repeat count(10) exceeded, stop requesting.");
         return;
       }
 
@@ -117,7 +116,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         (response) => {
           if (chrome.runtime.lastError) {
             setTimeout(() => {
-              ping2(repeated+1);
+              ping2(repeated + 1);
             }, 1000);
           } else {
             console.log(response.message);
@@ -132,14 +131,41 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 });
 
 chrome.action.onClicked.addListener((tab) => {
-  console.log('favicon clicked');
+  console.log("favicon clicked");
   if (tab.url.startsWith("https://www.youtube.com")) {
     console.log("favicon clicked, on youtube domain");
-    chrome.tabs.sendMessage( tab.id, { message: "show_UI" }, (response) => {
+    chrome.tabs.sendMessage(tab.id, { message: "show_UI" }, (response) => {
       console.log(response.message);
-    }); 
+    });
   } else {
     console.log("NOT youtube");
     // open web platform
-  }   
+  }
+});
+
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+  console.log(
+    sender.tab
+      ? "from a content script:" + sender.tab.url
+      : "from the extension"
+  );
+  if (request.greeting === "log_data") {
+    const { videoId, itemId, shopId } = request;
+    console.log("videoId, itemId, shopId:", videoId, itemId, shopId);
+    const postResponse = await (
+      await fetch("", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          videoId: videoId,
+          itemId: itemId,
+          shopId: shopId,
+        }),
+      })
+    ).json();
+    console.log(postResponse);
+    sendResponse({ farewell: "log data sent." });
+  }
 });

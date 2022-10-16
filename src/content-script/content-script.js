@@ -9,10 +9,13 @@ const $clovi = document.createElement("div");
 $clovi.id = "clovi";
 $body.appendChild($clovi);
 const $header = document.createElement("header");
+const $footer = document.createElement("footer");
 $header.className = "clv-header";
+$footer.className = "clv-footer";
+$footer.innerHTML = "<a class='clv-a' target='_blank' href='https://www.clovi.app/'><div class='clv-footer-text'>클로비 웹사이트 방문하기</div></a>";
 const $main = document.createElement("main");
 $main.className = "clv-main";
-$main.innerHTML = '<div class="clv-div clv-emptyItems">No items to load.</div>';
+// $main.innerHTML = '<div class="clv-div clv-emptyItems">No items to load.</div>';
 const $header__youtuber = document.createElement("div");
 const $header__right = document.createElement("div");
 const $right__model = document.createElement("div");
@@ -27,6 +30,7 @@ $right__close.addEventListener("click", () => {
 });
 $clovi.appendChild($header);
 $clovi.appendChild($main);
+$clovi.appendChild($footer);
 $header.appendChild($header__youtuber);
 $header.appendChild($header__right);
 $header__right.appendChild($right__model);
@@ -119,7 +123,7 @@ const get_right__model = (currentItemId) => {
 };
 const get_items = () => {
   if (currentItemId === -1) {
-    return '<div class="clv-div clv-emptyItems">No items to load.</div>';
+    return '';
   } else {
     console.log(collections);
     let clothes = collections[currentItemId].items;
@@ -273,7 +277,7 @@ const clear = () => {
   }
   $right__model.innerHTML = "";
   $main.innerHTML =
-    '<div class="clv-div clv-emptyItems">No items to load.</div>';
+    '';
   // 이 부분을 다르게 렌더링하면 비디오 아닌 경우에 보여줄 화면을 따로 지정하는 것이 가능함.
 };
 

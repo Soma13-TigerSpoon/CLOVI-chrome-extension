@@ -59,16 +59,18 @@ const updateContents = (timeline, byRender, video_data, video) => {
     console.log("$shopLink", $shopLinks);
     for (const shopLink of $shopLinks) {
       shopLink.onclick = function () {
-        console.log(`clicked, log data:\n\titem id: ${shopLink.dataset.itemId}\n\tshop id: ${shopLink.dataset.shopId}\n\tvideo id: ${video_data.id}`);
+        console.log(
+          `clicked, log data:\n\titem id: ${shopLink.dataset.itemId}\n\tshop id: ${shopLink.dataset.shopId}\n\tvideo id: ${video_data.id}`
+        );
         // alert(
         //   `item id: ${shopLink.dataset.itemId}\nshop id: ${shopLink.dataset.shopId}\nvideo id: ${video_data.id}`
         // );
         chrome.runtime.sendMessage(
-          { 
+          {
             greeting: "log_data",
             videoId: video_data.id,
             itemId: shopLink.dataset.itemId,
-            shopId: shopLink.dataset.shopId
+            shopId: shopLink.dataset.shopId,
           },
           function (response) {
             console.log(response.farewell);
@@ -129,10 +131,18 @@ const get_items = () => {
           <a class="clv-a clv-shopLink" data-item-id="${
             i.item.id
           }" data-shop-id="${
-          i.item.shops[0] ? i.item.shops[0].id : null
+          i.affiliationLink
+            ? i.affiliationLink.shopId
+            : i.item.shops.length > 0
+            ? i.item.shops[0].id
+            : null
         }" href="${
           // 여기 ternary operator는 affiliation이 아직 적용이 안 되었기 때문에 있는 것
-          i.item.shops[0] ? i.item.shops[0].shopUrl : ""
+          i.affiliationLink
+            ? i.affiliationLink.shopUrl
+            : i.item.shops.length > 0
+            ? i.item.shops[0].shopUrl
+            : null
         }" target="_blank">
             <div class="clv-div clv-item">
                 <img class="clv-item__img" src=${i.item.itemImgUrl}>
@@ -146,17 +156,25 @@ const get_items = () => {
                     <div class="clv-div clv-info__others">
                         <div class="clv-div clv-others__seller">
                             <img class="clv-seller__img" src=${
-                              i.item.shops[0] ? i.item.shops[0].logoUrl : ""
+                              i.affiliationLink
+                                ? i.affiliationLink.shopLogoUrl
+                                : i.item.shops.length > 0
+                                ? i.item.shops[0].logoUrl
+                                : ""
                             }>
                             <div class="clv-div clv-seller__name">${
-                              i.item.shops[0]
+                              i.affiliationLink
+                                ? i.affiliationLink.shopName
+                                : i.item.shops.length > 0
                                 ? i.item.shops[0].name
                                 : "판매처를 찾을 수 없습니다."
                             }</div>
                         </div>
                         <div class="clv-div clv-others__right">
                             <div class="clv-div clv-right__price">${
-                              i.item.shops[0]
+                              i.affiliationLink
+                                ? i.affiliationLink.price
+                                : i.item.shops.length > 0
                                 ? new Intl.NumberFormat().format(
                                     i.item.shops[0].price
                                   )

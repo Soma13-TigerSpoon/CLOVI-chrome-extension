@@ -1,11 +1,10 @@
 {
   "name": "CLOVI",
-  "description": "make youtube shoppable",
+  "description": "Youtube fashion shopping service",
   "version": "0.1.0",
   "manifest_version": 3,
   "permissions": [
-    "tabs",
-    "storage"
+    "tabs"
   ],
   "host_permissions": [
     "https://api.clovi.app/*"
@@ -21,23 +20,19 @@
       "css": ["src/content-script/cs-styles.css"]
     }
   ],
-  "web_accessible_resources": [
-    {
-      "resources": [ "assets/images/clovi-logo.png", "src/content-script/main.js" ],
-      "matches": [ "https://www.youtube.com/*" ]
-    }
-  ],
-  "action": {
-    "default_title": "Click to show UI again.",
-    "default_icon": "assets/images/clovi-logo.png"
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
   },
-  "commands": {
-    "_execute_action": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+F",
-        "mac": "MacCtrl+Shift+F"
-      },
-      "description": "Opens popup.html"
+  "action": {
+    "default_title": "클로비 화면을 다시 열려면 클릭하세요.",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
     }
   }
 }

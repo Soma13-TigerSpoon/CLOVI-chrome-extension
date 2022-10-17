@@ -12,7 +12,8 @@ const $header = document.createElement("header");
 const $footer = document.createElement("footer");
 $header.className = "clv-header";
 $footer.className = "clv-footer";
-$footer.innerHTML = "<a class='clv-a' target='_blank' href='https://www.clovi.app/'><div class='clv-footer-text'>클로비 웹사이트 방문하기</div></a>";
+$footer.innerHTML =
+  "<a class='clv-a' target='_blank' href='https://www.clovi.app/'><div class='clv-footer-text'>클로비 웹사이트 방문하기</div></a>";
 const $main = document.createElement("main");
 $main.className = "clv-main";
 // $main.innerHTML = '<div class="clv-div clv-emptyItems">No items to load.</div>';
@@ -123,7 +124,7 @@ const get_right__model = (currentItemId) => {
 };
 const get_items = () => {
   if (currentItemId === -1) {
-    return '';
+    return "";
   } else {
     console.log(collections);
     let clothes = collections[currentItemId].items;
@@ -136,7 +137,7 @@ const get_items = () => {
             i.item.id
           }" data-shop-id="${
           i.affiliationLink
-            ? i.affiliationLink.shopId
+            ? i.affiliationLink.id
             : i.item.shops.length > 0
             ? i.item.shops[0].id
             : null
@@ -161,14 +162,14 @@ const get_items = () => {
                         <div class="clv-div clv-others__seller">
                             <img class="clv-seller__img" src=${
                               i.affiliationLink
-                                ? i.affiliationLink.shopLogoUrl
+                                ? i.affiliationLink.logoUrl
                                 : i.item.shops.length > 0
                                 ? i.item.shops[0].logoUrl
                                 : ""
                             }>
                             <div class="clv-div clv-seller__name">${
                               i.affiliationLink
-                                ? i.affiliationLink.shopName
+                                ? i.affiliationLink.name
                                 : i.item.shops.length > 0
                                 ? i.item.shops[0].name
                                 : "판매처를 찾을 수 없습니다."
@@ -177,7 +178,9 @@ const get_items = () => {
                         <div class="clv-div clv-others__right">
                             <div class="clv-div clv-right__price">${
                               i.affiliationLink
-                                ? i.affiliationLink.price
+                                ? new Intl.NumberFormat().format(
+                                    i.affiliationLink.price
+                                  )
                                 : i.item.shops.length > 0
                                 ? new Intl.NumberFormat().format(
                                     i.item.shops[0].price
@@ -197,9 +200,32 @@ const get_items = () => {
           </div>
       </div>
       <div class="clv-div clv-shops">
-        ${i.item.shops
-          .map(
-            (shop) => `
+        ${
+          i.affiliationLink
+            ? `
+            <a class="clv-a clv-shopLink" data-item-id="${
+              i.item.id
+            }" data-shop-id="${i.affiliationLink.id}" href="${
+                i.affiliationLink.shopUrl
+              }" target="_blank">
+              <div class="clv-div clv-shops__shop">
+                <div class="clv-div clv-shop__shopInfo">
+                  <img class="clv-shopInfo__shopLogo" src=${
+                    i.affiliationLink.logoUrl
+                  }>
+                  <div class="clv-div clv-shopInfo__shopName">${
+                    i.affiliationLink.name
+                  }</div>
+                </div>
+                <div class="clv-div clv-shop__price">${new Intl.NumberFormat().format(
+                  i.affiliationLink.price
+                )}원</div>
+              </div>
+            </a>
+        `
+            : i.item.shops
+                .map(
+                  (shop) => `
             <a class="clv-a clv-shopLink" data-item-id="${
               i.item.id
             }" data-shop-id="${shop.id}" href="${shop.shopUrl}" target="_blank">
@@ -214,8 +240,9 @@ const get_items = () => {
               </div>
             </a>
         `
-          )
-          .join("")}
+                )
+                .join("")
+        }
       </div>
     `
       )
@@ -276,8 +303,7 @@ const clear = () => {
     video.ontimeupdate = null;
   }
   $right__model.innerHTML = "";
-  $main.innerHTML =
-    '';
+  $main.innerHTML = "";
   // 이 부분을 다르게 렌더링하면 비디오 아닌 경우에 보여줄 화면을 따로 지정하는 것이 가능함.
 };
 
